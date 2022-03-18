@@ -20,6 +20,7 @@ namespace Zenject
         readonly Subject<object> _stream = new Subject<object>();
 #endif
 
+        [Inject]
         public SignalDeclaration(
             SignalDeclarationBindInfo bindInfo,
             [InjectOptional]
@@ -40,6 +41,8 @@ namespace Zenject
             get { return _stream; }
         }
 #endif
+
+		public List<SignalSubscription> Subscriptions => _subscriptions;
 
         public int TickPriority
         {
@@ -175,6 +178,10 @@ namespace Zenject
 
         public class Factory : PlaceholderFactory<SignalDeclarationBindInfo, SignalDeclaration>
         {
+            [Inject]
+            public Factory()
+            {
+            }
         }
     }
 }

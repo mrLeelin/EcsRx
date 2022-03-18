@@ -10,8 +10,6 @@ namespace EcsRx.Examples.SimpleMovement.Systems
 {
     public class PlayerControlSystem : IBasicEntitySystem
     {
-        public readonly float MovementSpeed = 2.0f;
-
         public IGroup Group => new GroupBuilder()
             .WithComponent<ViewComponent>()
             .WithComponent<PlayerControlledComponent>()
@@ -32,8 +30,9 @@ namespace EcsRx.Examples.SimpleMovement.Systems
             var transform = view.transform;
 
             var newPosition = view.transform.position;
-            newPosition.x += strafeMovement * MovementSpeed * Time.deltaTime;
-            newPosition.z += forardMovement * MovementSpeed * Time.deltaTime;
+            var ctrl = entity.GetComponent<PlayerControlledComponent>();
+            newPosition.x += strafeMovement * ctrl.Speed * Time.deltaTime;
+            newPosition.z += forardMovement * ctrl.Speed * Time.deltaTime;
 
             transform.position = newPosition;
         }
